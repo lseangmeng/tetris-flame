@@ -86,7 +86,7 @@ class PlayingFrame {
   }
 
   void _handleShapeControlEvent(ShapeControlEvent event) {
-    debugPrint("buttonPressedInfoStream event[$event]");
+    // debugPrint("buttonPressedInfoStream event[$event]");
     if (event.rotatePressed) _rotateShape();
     if (event.leftPressed) _moveShapeLeft();
     if (event.rightPressed) _moveShapeRight();
@@ -241,6 +241,8 @@ class PlayingFrame {
 
   Future<void> _fireGunShape() async {
     MyBlock bottom = fallingShape.getBottomBlock();
+    GridIndex bottomIndex = posToGridIndex(bottom.position);
+    if (bottomIndex.r > rowCount) return;
     if (gunBlocks.isNotEmpty &&
         gunBlocks.last.position.y <= bottom.position.y) {
       return;
@@ -421,7 +423,7 @@ class PlayingFrame {
     } else {
       gunBlocks.removeFirst();
       GridIndex gridIndex = posToGridIndex(firstGunBlock.position);
-      if (blockAt[gridIndex.r][gridIndex.c] == null) {
+      if (gridIndex.r < rowCount && blockAt[gridIndex.r][gridIndex.c] == null) {
         blockAt[gridIndex.r][gridIndex.c] = firstGunBlock;
         _clearFullRows();
       } else {
@@ -475,15 +477,17 @@ class PlayingFrame {
   }
 
   Future<void> _placeShapeInFixedPos() async {
-    debugPrint("fallingShape.shapeType[${fallingShape.shapeType}]");
+    // debugPrint("fallingShape.shapeType[${fallingShape.shapeType}]");
     if (fallingShape.isGunShape()) {
-      world.removeAll(fallingShape.blocks);
+      List<MyBlock> blocksToRemove = fallingShape.blocks;
+      world.removeAll(blocksToRemove);
       await _startFallingShape();
       return;
     }
     MySoundPlayer.playBlockHitBottomSound();
     fallingShape.removeBlinkingEffect();
-    for (MyBlock block in fallingShape.getBlocks()) {
+    List<MyBlock> tempBlocks = fallingShape.getBlocks();
+    for (MyBlock block in tempBlocks) {
       Vector2 pos = block.position;
       GridIndex index = posToGridIndex(pos);
       if (index.r >= rowCount) {

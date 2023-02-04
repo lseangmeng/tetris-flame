@@ -204,9 +204,15 @@ class TetrisGame extends FlameGame with KeyboardEvents, HasTappableComponents {
     final isKeyDown = event is RawKeyDownEvent;
 
     if (isKeyDown) {
-      //for debugging
-      // if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
-      //   ShapeDef().enableOnlyBlockGunShape();
+      // for debugging
+      // if (keysPressed.contains(LogicalKeyboardKey.keyB)) {
+      //   ShapeDef().toggleOnlyBulletGunShape();
+      // }
+      // if (keysPressed.contains(LogicalKeyboardKey.keyO)) {
+      //   ShapeDef().toggleOnlyBlockGunShape();
+      // }
+      // if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
+      //   ShapeDef().toggleOnlySpecialOneBlock();
       // }
       return KeyEventResult.handled;
     }

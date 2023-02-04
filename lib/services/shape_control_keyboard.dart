@@ -21,7 +21,7 @@ class ShapeControlKeyboard {
     final isArrowDown = keysPressed.contains(LogicalKeyboardKey.arrowDown);
     final isArrowUp = keysPressed.contains(LogicalKeyboardKey.arrowUp);
 
-    debugPrint("isKeyDown[$isKeyDown] down[$isArrowDown]");
+    // debugPrint("isKeyDown[$isKeyDown] down[$isArrowDown]");
 
     if (isKeyDown) {
       _handleLeftArrow(isArrowLeft);

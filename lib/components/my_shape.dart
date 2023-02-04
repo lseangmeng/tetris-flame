@@ -65,7 +65,8 @@ class MyShape {
 
   void removeBlinkingEffect() {
     if (shapeIndex.isSpecialOneBlock()) {
-      for (var block in blocks) {
+      List<MyBlock> blocksToRemove = blocks;
+      for (var block in blocksToRemove) {
         block.removeBlinkingEffect();
       }
     }
@@ -81,7 +82,8 @@ class MyShape {
 
   void _removeShape() {
     removeBlinkingEffect();
-    world.removeAll(blocks);
+    List<MyBlock> blocksToRemove = blocks;
+    world.removeAll(blocksToRemove);
   }
 
   Future<void> changeShapeToIndex(ShapeIndex shapeIndex) async {

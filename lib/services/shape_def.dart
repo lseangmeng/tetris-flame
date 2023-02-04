@@ -30,28 +30,16 @@ class ShapeDef {
   void setToMediumMode() { _gameMode = GameMode.medium; }
   void setToHardMode() { _gameMode = GameMode.hard; }
 
-  void enableOnlySpecialOneBlock() {
-    _onlySpecialOneBlock = true;
+  void toggleOnlySpecialOneBlock() {
+    _onlySpecialOneBlock = !_onlySpecialOneBlock;
   }
 
-  void disableOnlySpecialOneBlock() {
-    _onlySpecialOneBlock = false;
+  void toggleOnlyBlockGunShape() {
+    _onlyBlockGunShape = !_onlyBlockGunShape;
   }
 
-  void enableOnlyBlockGunShape() {
-    _onlyBlockGunShape = true;
-  }
-
-  void disableOnlyBlockGunShape() {
-    _onlyBlockGunShape = false;
-  }
-
-  void enableOnlyBulletGunShape() {
-    _onlyBulletGunShape = true;
-  }
-
-  void disableOnlyBulletGunShape() {
-    _onlyBulletGunShape = false;
+  void toggleOnlyBulletGunShape() {
+    _onlyBulletGunShape = !_onlyBulletGunShape;
   }
 
   ShapeIndex getRandomShapeIndex() {
@@ -270,12 +258,12 @@ List<ShapeGroup> _buildShapeGroups() {
   | O |
   | O |
   """), shapeType: ShapeType.blockGun, groupIndex: i++));
-  // shapeGroups.add(ShapeGroup(_shapeGroupDefToShapeGroup("""
-  // | O |
-  // | O |
-  // | O |
-  // | O |
-  // """), shapeType: ShapeType.bulletGun, groupIndex: i++));
+  shapeGroups.add(ShapeGroup(_shapeGroupDefToShapeGroup("""
+  | O |
+  | O |
+  | O |
+  | O |
+  """), shapeType: ShapeType.bulletGun, groupIndex: i++));
   shapeGroups.add(ShapeGroup.complex(_shapeGroupDefToShapeGroup("""
   |  O  |
   | OOO |
