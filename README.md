@@ -1,8 +1,13 @@
-# tetris
+# Tetris Game
 
-A new Flutter project.
+This game is developed using [Flutter Flame](https://pub.dev/packages/flame).
 
-## Getting Started
+There are special shapes called [helper shapes](https://docs.google.com/document/d/18r5Nv9yu102OWOPv_WCQAg6dFP5RFFA0E-1rsWZcVvk). They may appear when it is nearly game over.
+
+The document describing the important components of the game can be found in doc/Tetris.pdf in the project.
+
+
+## Getting Started with Flutter
 
 This project is a starting point for a Flutter application.
 
