@@ -154,10 +154,6 @@ class TetrisGame extends FlameGame with KeyboardEvents, HasTappableComponents {
     playingFrame.start();
   }
 
-  // Future<void> _loadSoundAssets() async {
-  //   await FlameAudio.audioCache.loadAll(SoundConst.preloadSounds);
-  // }
-
   @override
   void update(double dt) {
     if (gameState == GameState.playing) {

@@ -37,6 +37,7 @@ class PlayingFrame {
   late MyShape fallingShape;
   bool fallingShapeIsActive = false;
   double fallingSpeedPixelsPerSecond;
+  late double _gunBlockFallingSpeedPixelsPerSecond;
   double _totalPixelsToMoveDown = 0;
   double _totalPixelsToMoveDownForGunBlocks = 0;
   void Function(GameState, int, int) onShapeHitBottom;
@@ -60,6 +61,7 @@ class PlayingFrame {
     required this.onShapeHitBottom,
     required Stream<ShapeControlEvent> buttonPressedInfoStream,
   }) {
+    _gunBlockFallingSpeedPixelsPerSecond = 25 * fallingSpeedPixelsPerSecond;
     buttonPressedInfoStream.listen(_handleShapeControlEvent);
   }
   Future<void> init() async {
@@ -230,7 +232,7 @@ class PlayingFrame {
     if (now.difference(_lastRotate).inMilliseconds >=
         millisPerRotateKeyboardHandling) {
       _lastRotate = now;
-       await MySoundPlayer.playRotateSound();
+      await MySoundPlayer.playRotateSound();
       if (fallingShape.isGunShape()) {
         await _fireGunShape();
       } else {
@@ -241,8 +243,6 @@ class PlayingFrame {
 
   Future<void> _fireGunShape() async {
     MyBlock bottom = fallingShape.getBottomBlock();
-    GridIndex bottomIndex = posToGridIndex(bottom.position);
-    if (bottomIndex.r > rowCount) return;
     if (gunBlocks.isNotEmpty &&
         gunBlocks.last.position.y <= bottom.position.y) {
       return;
@@ -314,6 +314,13 @@ class PlayingFrame {
       _shiftRowDownFromTo(r + 1, r);
       if (_isEmptyRow(r + 1)) break;
     }
+    _clearTopRow();
+  }
+
+  void _clearTopRow() {
+    for (int c = 0; c < colCount; c++) {
+      blockAt[rowCount - 1][c] = null;
+    }
   }
 
   bool _isEmptyRow(int r) {
@@ -348,7 +355,7 @@ class PlayingFrame {
   }
 
   void _updateGunBlocks(double dt) {
-    _totalPixelsToMoveDownForGunBlocks += 20 * fallingSpeedPixelsPerSecond * dt;
+    _totalPixelsToMoveDownForGunBlocks += _gunBlockFallingSpeedPixelsPerSecond * dt;
     double pixelsToMoveDown = 0;
     if (_totalPixelsToMoveDownForGunBlocks >= blockHeight) {
       pixelsToMoveDown = blockHeight;
